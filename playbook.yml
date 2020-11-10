@@ -1,0 +1,23 @@
+---
+- hosts: all
+  become: yes
+
+  pre_tasks:
+    - name: update apt cache if needed
+      apt: "update_cache=yes cache_valid_time=36000"
+
+    # - debug: var=repo_stat
+    - name: Check if git repo exists
+      stat: path=/opt/yolo
+      register: repo_stat
+
+    - name: Fetch the Yolo git repo
+      git:
+          repo: https://github.com/nkmakau/yolo.git
+          dest: path=/opt/yolo
+      when: not repo_stat.stat.exists
+
+  tasks:
+        # Install nodejs and npm on the client host    
+          
+          
