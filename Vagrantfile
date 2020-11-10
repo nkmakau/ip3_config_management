@@ -8,7 +8,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "geerlingguy/ubuntu2004"
   config.ssh.insert_key = false
   config.vm.provider :virtualbox do |v|
-        v.memory = 2048
+        v.memory = 1024
         v.linked_clone = true
   end
 
