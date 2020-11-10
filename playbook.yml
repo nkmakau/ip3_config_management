@@ -116,6 +116,11 @@
 
         when: inventory_hostname =="mongodb"
 
+        handlers:
+            - name: Start MongoDB
+              apt: name=mongod state=started
+
+
 
     
 
