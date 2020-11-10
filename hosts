@@ -7,14 +7,14 @@
 192.168.10.3
 
 # Database server
-[db]
+[mongodb]
 192.168.10.4
 
 # Group 'multi' with all servers
 [multi:children]
 client
 backend
-db
+mongodb
 
 # Variables that will be applied to all servers
 [multi:vars]
