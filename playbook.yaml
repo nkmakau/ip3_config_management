@@ -1,0 +1,21 @@
+---
+- name: Install client
+  hosts: client
+  become: yes
+  roles:
+    - pretasks
+    - client
+
+- name: Install backend
+  hosts: backend
+  become: yes
+  roles:
+    - pretasks
+    - backend
+
+- name: Install MongoDB 
+  hosts: mongodb
+  become: yes
+  roles:
+    - pretasks
+    - mongodb
