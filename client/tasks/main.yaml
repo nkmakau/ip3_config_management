@@ -1,0 +1,37 @@
+---
+- name: Install nodejs and npm on the client host 
+  apt:
+        state: present
+        name:
+              - nodejs
+              - npm
+              - build-essential
+
+- name:  Check git repo folder exists.
+  stat: path=/opt/yolo/client
+  register: git_stat
+
+- name: Copy the client directory to vagrant home folder
+  command: mv /opt/yolo/client /home/vagrant
+  when: git_stat.stat.exists
+
+- name: Install required modules in package.json
+  command: >
+          chdir=/home/vagrant/client/
+          npm install
+
+- name: Run NPM for production
+  command: >
+          chdir=/home/vagrant/client/
+          npm run build
+
+- name: Install serve module
+  command: >
+          chdir=/home/vagrant/client/
+          npm install -g serve
+
+- name: Start the client app 
+  shell: "nohup serve -s build -l 3000 </dev/null >/dev/null 2>&1 &"
+  args:
+    chdir: /home/vagrant/client/
+          
