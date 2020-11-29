@@ -1,0 +1,19 @@
+---
+- name: Update apt cache if needed
+  apt: "update_cache=yes cache_valid_time=14400"
+
+- name: Install git
+  apt: 
+     name: git
+     state: present
+     update_cache: yes
+
+- name: Check if the Git repository noshmak/yolo exists
+  stat: path=/opt/yolo
+  register: repo_stat
+
+- name: Fetch the noshmak/yolo GitHub repository
+  git:
+          repo: https://github.com/noshmak/yolo.git
+          dest: /opt/yolo
+  when: not repo_stat.stat.exists
