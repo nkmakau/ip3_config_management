@@ -1,0 +1,48 @@
+- name: Install nodejs and npm on the backend host
+  apt:
+        state: present
+        name:
+              - nodejs
+              - npm
+              - build-essential
+
+- name: Check git repo folder exists.
+  stat: path=/opt/yolo/backend
+  register: git_stat
+
+- name: Copy the backend directory to vagrant home directory
+  command: mv /opt/yolo/backend /home/vagrant
+  when: git_stat.stat.exists
+
+- name: Edit the mongodb server IP address
+  replace:
+    path: /home/vagrant/backend/server.js
+    regexp: 'mongo:27017/'
+    replace: "192.168.60.5:27017/"
+
+
+- name: Install required modules in package.json
+  command: >
+          chdir=/home/vagrant/backend
+          npm install
+
+- name: Install PM2 (to run our app)
+  command: >
+          chdir=/home/vagrant/backend
+          npm install pm2 -g
+
+- name: Spawn PM2 to become active
+  command: > 
+          chdir=/home/vagrant/backend
+          pm2 list
+          
+- name: Start the backend using PM2
+  command: >
+            chdir=/home/vagrant/backend
+            pm2 start --name yolo_app npm -- start 
+            
+- name: Save the list of process for automatic restart after a system reboot
+  command: pm2 save
+
+- name: Configure PM2 to start automatically on system bootup
+  command: pm2 startup
