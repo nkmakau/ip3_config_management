@@ -1,14 +1,16 @@
+[all:vars]
+
 # Client server
 [client]
-192.168.10.3
+192.168.60.3
 
 # Backend server
 [backend]
-192.168.10.4
+192.168.60.4
 
 # Database server
 [mongodb]
-192.168.10.5
+192.168.60.5
 
 # Group 'multi' with all servers
 [multi:children]

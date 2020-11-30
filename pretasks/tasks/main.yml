@@ -8,12 +8,12 @@
      state: present
      update_cache: yes
 
-- name: Check if the Git repository noshmak/yolo exists
+- name: Check if the Git repository nkmakau/yolo exists
   stat: path=/opt/yolo
   register: repo_stat
 
-- name: Fetch the noshmak/yolo GitHub repository
+- name: Fetch the nkmakau/yolo GitHub repository
   git:
-          repo: https://github.com/noshmak/yolo.git
+          repo: https://github.com/nkmakau/yolo.git
           dest: /opt/yolo
   when: not repo_stat.stat.exists

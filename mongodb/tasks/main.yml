@@ -19,6 +19,16 @@
   notify:
     - restart mongodb
 
+# - name: create /etc/security/limits.d/mongodb.conf
+#   copy:
+#     src: security-mongodb.conf
+#     dest: /etc/security/limits.d/mongodb.conf
+#     owner: root
+#     group: root
+#     mode: 0644
+#   notify:
+#     - restart mongodb
+
 - name:  Set vm.dirty_ratio 
   sysctl:
     name: vm.dirty_ratio
